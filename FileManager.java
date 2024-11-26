@@ -59,6 +59,11 @@ public class FileManager {
         if (guess.equals(passwordString)){
             return secretKey;
         }
+        else{
+            System.out.println("Invalid key try again...");
+            getSecret();
+            return null;
+        }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
