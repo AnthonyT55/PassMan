@@ -104,7 +104,7 @@ class PassMan{
 
     public static void Options(){
         System.out.println("\nPassMan");
-        System.out.println("1: Check File");
+        System.out.println("1: Check File (choose if this is first time running the program)");
         System.out.println("2: Add Credentials");
         System.out.println("3: Show Credentials");
         System.out.println("4: Generate Password");
