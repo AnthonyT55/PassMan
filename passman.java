@@ -88,8 +88,22 @@ class PassMan{
         }
     }
 
+    public static void reRun(){
+        System.out.println("Would you like to run again? (yes or no)");
+        Scanner runScanner = new Scanner(System.in);
+        String answer = runScanner.nextLine();
+        switch(answer){
+            case "yes":
+            Options();
+            break;
+            case "no":
+            System.out.println("Okay Goodbye");
+            break;
+        }
+    }
+
     public static void Options(){
-        System.out.println("PassMan");
+        System.out.println("\nPassMan");
         System.out.println("1: Check File");
         System.out.println("2: Add Credentials");
         System.out.println("3: Show Credentials");
@@ -103,6 +117,7 @@ class PassMan{
             case 1:
             checkFile();
             encrypt();
+            reRun();
             break;
 
             case 2:
@@ -116,12 +131,14 @@ class PassMan{
             String platform = dataScanner.nextLine();
             addCredentials(username, password, platform);
             encrypt();
+            reRun();
             break;
 
             case 3:
             decrypt();
             showCredentials();
             encrypt();
+            reRun();
             break;
 
             case 4:
@@ -143,7 +160,13 @@ class PassMan{
                 System.out.println("Now provide me with a platform to store it with as well");
                 String plat = infoScanner.nextLine();
 
+                
+
+                decrypt();
                 addCredentials(tempusername, newPassword, plat);
+                encrypt();
+                reRun();
+                break;
 
                 case 2:
                 break;
@@ -183,7 +206,7 @@ class PassMan{
             password.append(getRandomChar(random, allCharacters));
         }
 
-        for(int i = 0; i < amount; i++){
+        for(int i = 0; i < amount - 1; i++){
             System.out.println(shuffleString(password.toString()));
         }
 
