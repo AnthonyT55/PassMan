@@ -5,7 +5,7 @@ import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 
 public class FileManager {
-    public static String passwordString = "password12345678";
+    public static String defaultPassword = "password12345678";
 
     public static void encryptFile(String inputFile, String outputFile, SecretKey secretKey) throws Exception{
         Cipher cipher = Cipher.getInstance("AES");
@@ -53,25 +53,50 @@ public class FileManager {
     public static SecretKey getSecret(){
         Scanner keyScanner = new Scanner(System.in);
         try {
-        SecretKey secretKey = getKeyFromString(passwordString);
+        SecretKey secretKey = getKeyFromString(defaultPassword);
         System.out.print("Enter key: ");
         String guess = keyScanner.nextLine();
-        if (guess.equals(passwordString)){
+        if (guess.equals(defaultPassword)){
             return secretKey;
         }
         else{
             System.out.println("Invalid key try again...");
-            getSecret();
-            return null;
+            while(!guess.equals(defaultPassword)){
+                getSecret();
+                return secretKey;
+            }
         }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
+        keyScanner.close();
         return null;
     }
 
     public static SecretKey secret(){
-        SecretKey secretKey = getKeyFromString(passwordString);
+        SecretKey secretKey = getKeyFromString(defaultPassword);
         return secretKey;
+    }
+
+    public static void clearScreen(){
+        String os = System.getProperty("os.name").toLowerCase();
+
+        try {
+            //If Windows
+            if(os.contains("win")){
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            }
+            //If any other OS
+            else if(os.contains("nix") || os.contains("nux") || os.contains("mac")){
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
+            }
+            else{
+                System.out.println("Can't clear, OS is not recognized");
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
