@@ -1,7 +1,13 @@
-import java.io.*;
-import java.nio.file.*;
-import java.security.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.SecureRandom;
+import java.util.Scanner;
 
 
 
@@ -38,7 +44,6 @@ class PassMan{
         
     public static void checkFile(){
         Path path = Paths.get("passwords.enc");
-        
 
         try {
             if(Files.notExists(path)){
@@ -98,7 +103,6 @@ class PassMan{
             Options();
             break;
             case "no":
-            FileManager.clearScreen();
             System.out.println("Okay Goodbye");
             break;
         }
@@ -106,12 +110,18 @@ class PassMan{
 
     public static void Options(){
         FileManager.clearScreen();
-        System.out.println("\nPassMan Menu");
-        System.out.println("[1]: Check File (choose if this is first time running the program)");
-        System.out.println("[2]: Add Credentials");
-        System.out.println("[3]: Show Credentials");
-        System.out.println("[4]: Generate Password");
-        System.out.println("[5]: Exit");
+        System.out.println("__________                         _____                 ");
+        System.out.println("\\______   \\_____    ______ ______ /     \\ _____    ____  ");
+        System.out.println(" |     ___/\\__  \\  /  ___//  ___//  \\ /  \\\\__  \\  /    \\ ");
+        System.out.println(" |    |     / __ \\_\\___ \\ \\___ \\/    Y    \\/ __ \\|   |  \\");
+        System.out.println(" |____|    (____  /____  >____  >____|__  (____  /___|  /");
+        System.out.println("                \\/     \\/     \\/        \\/     \\/     \\/ ");
+        System.out.println("\n");
+        System.out.println("1: Check File (choose if this is first time running the program)");
+        System.out.println("2: Add Credentials");
+        System.out.println("3: Show Credentials");
+        System.out.println("4: Generate Password");
+        System.out.println("5: Exit");
         System.out.print("Choose your option: ");
        try {
         Scanner choiceScanner = new Scanner(System.in);
@@ -143,7 +153,7 @@ class PassMan{
 
             case 3:
             FileManager.clearScreen();
-            System.out.println("Loading Your Credentials...");
+            System.out.println("Loading Your Credentials");
             decrypt();
             showCredentials();
             encrypt();
@@ -152,7 +162,7 @@ class PassMan{
 
             case 4:
             FileManager.clearScreen();
-            System.out.println("Generating your password(s)...");
+            System.out.println("Generating your password...");
             Scanner passwordScanner = new Scanner(System.in);
             System.out.print("How long do you want your password?: ");
             int length = passwordScanner.nextInt();
@@ -165,7 +175,6 @@ class PassMan{
             System.out.println("Would you like to save this password? (1 = yes, 2 = no)");
             switch(passwordScanner.nextInt()){
                 case 1:
-                FileManager.clearScreen();
                 Scanner infoScanner = new Scanner(System.in);
                 System.out.println("Okay please provide a username to store it with");
                 String tempusername = infoScanner.nextLine();
@@ -174,7 +183,6 @@ class PassMan{
 
                 
 
-                decrypt();
                 addCredentials(tempusername, newPassword, plat);
                 encrypt();
                 reRun();
