@@ -108,8 +108,7 @@ class PassMan{
         }
     }
 
-    public static void Options(){
-        FileManager.clearScreen();
+    public static void Border(){
         System.out.println("__________                         _____                 ");
         System.out.println("\\______   \\_____    ______ ______ /     \\ _____    ____  ");
         System.out.println(" |     ___/\\__  \\  /  ___//  ___//  \\ /  \\\\__  \\  /    \\ ");
@@ -117,6 +116,11 @@ class PassMan{
         System.out.println(" |____|    (____  /____  >____  >____|__  (____  /___|  /");
         System.out.println("                \\/     \\/     \\/        \\/     \\/     \\/ ");
         System.out.println("\n");
+    }
+
+    public static void Options(){
+        FileManager.clearScreen();
+        Border();
         System.out.println("1: Check File (choose if this is first time running the program)");
         System.out.println("2: Add Credentials");
         System.out.println("3: Show Credentials");
