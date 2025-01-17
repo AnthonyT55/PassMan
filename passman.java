@@ -51,7 +51,7 @@ class PassMan{
                 System.out.println("Passwords file created");
             }
             else{
-                System.out.println("Passwords file exists");
+                System.out.println("Passwords file exists, you're good to start using PassMan :)");
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -135,7 +135,6 @@ class PassMan{
             FileManager.clearScreen();
             System.out.println("Checking for file...");
             checkFile();
-            encrypt();
             reRun();
             break;
 
@@ -264,3 +263,4 @@ class PassMan{
         
     }
 }
+
