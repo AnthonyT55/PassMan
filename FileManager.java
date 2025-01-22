@@ -1,7 +1,13 @@
-import java.io.*;
-import java.security.*;
-import java.util.*;
-import javax.crypto.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.security.NoSuchAlgorithmException;
+import java.util.Scanner;
+
+import javax.crypto.Cipher;
+import javax.crypto.CipherInputStream;
+import javax.crypto.CipherOutputStream;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 public class FileManager {
@@ -46,6 +52,8 @@ public class FileManager {
         return keyGenerator.generateKey();
     }
 
+
+
     public static SecretKey getKeyFromString(String key){
         return new SecretKeySpec(key.getBytes(), "AES");
     }
@@ -82,7 +90,8 @@ public class FileManager {
         String os = System.getProperty("os.name").toLowerCase();
 
         try {
-            //If Windows
+
+            //Windows
             if(os.contains("win")){
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             }
@@ -91,12 +100,12 @@ public class FileManager {
                 new ProcessBuilder("clear").inheritIO().start().waitFor();
             }
             else{
-                System.out.println("Can't clear, OS is not recognized");
+                System.out.println("OS not recognized, cannot clear screen");
             }
-
-
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 }
+
