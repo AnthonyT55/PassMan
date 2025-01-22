@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -8,7 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.SecureRandom;
 import java.util.Scanner;
-
+import java.util.*;
 
 
 class PassMan{
@@ -51,7 +52,7 @@ class PassMan{
                 System.out.println("Passwords file created");
             }
             else{
-                System.out.println("Passwords file exists, you're good to start using PassMan :)");
+                System.out.println("Passwords file exists");
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -76,23 +77,64 @@ class PassMan{
             FileWriter writer = new FileWriter(filePath, true);
             writer.write(data);
             writer.close();
+            
+            
             System.out.println("Credentials added successfully");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
 
-    public static void showCredentials(){
-        String filePath = "passwords.txt";
-        try(BufferedReader br = new BufferedReader(new FileReader(filePath))){
+    public static void delete(int ID){
+        File file = new File("passwords.txt");
+        int startLineToDelete = ID - 1;
+
+        List<String> lines = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))){
             String line;
-            while((line = br.readLine()) != null){
-                System.out.println(line);
+            while((line = reader.readLine()) != null){
+                lines.add(line);
             }
-        } catch (IOException e){
+        }catch(IOException e){
             System.out.println("Error: " + e.getMessage());
         }
+
+        int linesToRemove = 3;
+        int endLineToDelete = startLineToDelete + linesToRemove;
+        if(startLineToDelete >= 0 && startLineToDelete < lines.size()){
+            for (int i = 0; i < linesToRemove && startLineToDelete < lines.size(); i++){
+                lines.remove(startLineToDelete);
+            }
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            for (String line : lines){
+                writer.write(line);
+                writer.newLine();
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        System.out.println("User deleted Successfully");
+
     }
+
+    public static void showCredentials(){
+        String filePath = "passwords.txt";
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))){
+            String line;
+            int lineNumber = 1;
+            while((line = br.readLine()) != null){
+                System.out.println( " " + lineNumber + ": " + line);
+                lineNumber++;
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+    }
+
 
     public static void reRun(){
         System.out.println("Would you like to run again? (yes or no)");
@@ -125,7 +167,8 @@ class PassMan{
         System.out.println("2: Add Credentials");
         System.out.println("3: Show Credentials");
         System.out.println("4: Generate Password");
-        System.out.println("5: Exit");
+        System.out.println("5: Delete User");
+        System.out.println("6: Exit");
         System.out.print("Choose your option: ");
        try {
         Scanner choiceScanner = new Scanner(System.in);
@@ -135,6 +178,7 @@ class PassMan{
             FileManager.clearScreen();
             System.out.println("Checking for file...");
             checkFile();
+            encrypt();
             reRun();
             break;
 
@@ -198,6 +242,18 @@ class PassMan{
             }
 
             case 5:
+            FileManager.clearScreen();
+            System.out.println("Beginning delete sequence...");
+            decrypt();
+            Scanner deleteScanner = new Scanner(System.in);
+            System.out.println("Please enter the line the username you would like to delete appears on: ");
+            int Id = deleteScanner.nextInt();
+            delete(Id);
+            encrypt();
+            reRun();
+            break;
+
+            case 6:
             FileManager.clearScreen();
             System.out.println("Goodbye...");
             break;
@@ -263,4 +319,3 @@ class PassMan{
         
     }
 }
-
