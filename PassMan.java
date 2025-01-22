@@ -202,7 +202,7 @@ class PassMan{
             FileManager.clearScreen();
             decrypt();
             System.out.println("Loading Your Credentials");
-            FileManager.clearScreen():
+            FileManager.clearScreen();
             showCredentials();
             encrypt();
             reRun();
