@@ -178,7 +178,6 @@ class PassMan{
             FileManager.clearScreen();
             System.out.println("Checking for file...");
             checkFile();
-            encrypt();
             reRun();
             break;
 
