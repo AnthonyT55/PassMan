@@ -106,7 +106,12 @@ public class PM {
                 System.out.println("Error: " + e);
             }
             case "no":
-            System.out.println("Okay Goodbye");
+            try {
+                System.out.println("Okay Goodbye");
+                Utils.encryptFile(sk, "passwords.txt", "passwords.enc");
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
             break;
         }
         }
