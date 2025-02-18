@@ -203,6 +203,7 @@ public class PM {
                 break;
 
             }
+            break;
 
             case 4:
             Utils.clearScreen();
