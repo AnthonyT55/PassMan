@@ -89,6 +89,7 @@ public class PM {
         switch(answer){
             case "yes":
             Path path = Paths.get("passwords.enc");
+            
         
 
             try{
@@ -106,9 +107,18 @@ public class PM {
                 System.out.println("Error: " + e);
             }
             case "no":
+            Path ptxt = Paths.get("passwords.txt");
+
             try {
-                System.out.println("Okay Goodbye");
-                Utils.encryptFile(sk, "passwords.txt", "passwords.enc");
+                if(Files.exists(ptxt)){
+                    System.out.println("Okay Goodbye");
+                    Utils.encryptFile(sk, "passwords.txt", "passwords.enc");
+                }
+                else{
+                    System.out.println("Okay Goodbye");
+                    break;
+                }
+                
             } catch (Exception e) {
                 System.out.println("Error: " + e);
             }
@@ -134,7 +144,8 @@ public class PM {
         System.out.println("2: Show Credentials");
         System.out.println("3: Generate Password");
         System.out.println("4: Delete User");
-        System.out.println("5: Exit");
+        System.out.println("5: Change Decryption Key");
+        System.out.println("6: Exit");
         System.out.print("Choose your option: ");
        try (Scanner choiceScanner = new Scanner(System.in);){
         int choice = choiceScanner.nextInt();
@@ -204,6 +215,25 @@ public class PM {
             break;
 
             case 5:
+            try (Scanner dk = new Scanner(System.in)) {
+                Utils.clearScreen();
+                System.out.println("Enter your current decryption key: ");
+                String attempt = dk.nextLine();
+                SecretKey ska = KeyUtils.getSecretKeyFromString(attempt);
+                if (ska.equals(sk)){
+                    Register.createUser();
+                }
+                else{
+                    System.out.println("Incorrect, Returning to menu...");
+                    Options(sk);
+                }
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
+            
+            break;
+
+            case 6:
             Utils.clearScreen();
             Utils.encryptFile(sk, "passwords.txt", "passwords.enc");
             System.out.println("Goodbye...");
